@@ -6,3 +6,12 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
+  mondo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=1234
+    volumes:
+      - mongo-db:/data/db
+volumes:
+  mongo-db:
