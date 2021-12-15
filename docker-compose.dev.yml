@@ -1,7 +1,7 @@
 version: '3'
 services:
   node-app:
-    build: 
+    build:
       context: .
       args: 
         NODE_ENV: development
@@ -12,8 +12,10 @@ services:
       - NODE_ENV=development
       - MONGO_USER=root
       - MONGO_PASSWORD=1234
+      - SESSION_SECRET=secret
     depends_on:
       - mongo
+      - redis
     command: npm run dev
   mongo:
     environment:
