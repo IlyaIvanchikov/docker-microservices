@@ -7,7 +7,6 @@ export const createUser = async (req, res, next) => {
         // console.log(req.session, 'req.session')
         // req.session.user = "rtert";
         const hashPassword = await bcrypt.hash(password, 12);
-
         const data = await User.create({
             username,
             password: hashPassword,
@@ -40,6 +39,7 @@ export const signIn = async (req, res, next) => {
         const isCorrect = await bcrypt.compare(password, user.password);
 
         if (isCorrect) {
+            req.session.user = user;
             return res.status(201).send({
                 status: 'success',
             });
