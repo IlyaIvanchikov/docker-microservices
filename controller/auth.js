@@ -4,8 +4,6 @@ import bcrypt from 'bcrypt';
 export const createUser = async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        // console.log(req.session, 'req.session')
-        // req.session.user = "rtert";
         const hashPassword = await bcrypt.hash(password, 12);
         const data = await User.create({
             username,

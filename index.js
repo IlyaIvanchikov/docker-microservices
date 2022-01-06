@@ -17,13 +17,6 @@ const app = express();
 import { postRoutes } from './routes/post.js';
 import { authRoutes } from './routes/auth.js';
 
-const RedisStore = connectRedis(session);
-
-const redisClient = redis.createClient({
-    url: `redis://${REDIS_URL}:${REDIS_PORT}`,
-});
-await redisClient.connect();
-
 const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/mydb?authSource=admin`;
 
 const connectWithRetry = () => {
@@ -40,17 +33,25 @@ connectWithRetry();
 
 const PORT = process.env.PORT || 3000;
 
+
+const RedisStore = connectRedis(session);
+
+const redisClient = redis.createClient({
+    url: `redis://${REDIS_URL}:${REDIS_PORT}`,
+    legacyMode: true
+});
+await redisClient.connect();
+
 app.use(
     session({
         store: new RedisStore({ client: redisClient }),
         secret: SESSION_SECRET,
-
+        resave: false,
+        saveUninitialized: false,
         cookie: {
-            resave: false,
-            saveUninitialized: false,
             secure: false, // if true only transmit cookie over https
             httpOnly: true, // if true prevent client side JS from reading the cookie
-            maxAge: 300000, // session max age in miliseconds
+            maxAge: 30000, // session max age in miliseconds
         },
     }),
 );

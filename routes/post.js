@@ -1,5 +1,5 @@
 import express from 'express';
-
+import { auth } from '../middleware/auth';
 import {
     getAllPost,
     createPost,
@@ -10,10 +10,9 @@ import {
 
 export const postRoutes = express.Router();
 
-postRoutes.route('/').get(getAllPost).post(createPost);
-postRoutes.route('/:id').get(getOnePost).delete(deletePost).patch(updatePost);
-
-
-
-
-
+postRoutes.route('/').get(auth, getAllPost).post(auth, createPost);
+postRoutes
+    .route('/:id')
+    .get(auth, getOnePost)
+    .delete(auth, deletePost)
+    .patch(auth, updatePost);
