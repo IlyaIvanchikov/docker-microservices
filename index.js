@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import redis from 'redis';
+import cors from 'cors';
+
 import connectRedis from 'connect-redis';
 import {
     MONGO_USER,
@@ -33,15 +35,17 @@ connectWithRetry();
 
 const PORT = process.env.PORT || 3000;
 
-
 const RedisStore = connectRedis(session);
 
 const redisClient = redis.createClient({
     url: `redis://${REDIS_URL}:${REDIS_PORT}`,
-    legacyMode: true
+    legacyMode: true,
 });
 await redisClient.connect();
 
+app.enable('trust proxy');
+
+app.use(cors({}));
 app.use(
     session({
         store: new RedisStore({ client: redisClient }),
@@ -58,7 +62,8 @@ app.use(
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
+    console.log('node youtp');
     res.send(`hello`);
 });
 
