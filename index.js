@@ -19,7 +19,7 @@ const app = express();
 import { postRoutes } from './routes/post.js';
 import { authRoutes } from './routes/auth.js';
 
-const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/mydb?authSource=admin`;
+const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}`;
 
 const connectWithRetry = () => {
     mongoose

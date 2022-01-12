@@ -19,7 +19,6 @@ services:
     command: node index.js
   mongo:
     container_name: mongodb
-    command: [--auth]
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
