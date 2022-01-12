@@ -62,8 +62,7 @@ app.use(
 
 app.use(express.json());
 
-app.get('/api', (req, res) => {
-    console.log('node youtp');
+app.get('/api/v1', (req, res) => {
     res.send(`hello`);
 });
 
