@@ -18,6 +18,9 @@ services:
       - SESSION_SECRET=${SESSION_SECRET}
     command: node index.js
   mongo:
+    container_name: mongodb
+    command: [--auth]
+    restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
