@@ -63,7 +63,7 @@ app.use(
 app.use(express.json());
 
 app.get('/api/v1', (req, res) => {
-    res.send(`hello`);
+    res.send(`lesson number 29 of 32!!`);
 });
 
 app.use('/api/v1/posts', postRoutes);
